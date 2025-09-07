@@ -17,6 +17,12 @@ repositories {
     mavenCentral()
 }
 
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.modulith:spring-modulith-bom:1.2.5"
+    }
+}
+
 dependencies {
 
     implementation 'org.springframework.boot:spring-boot-starter-web'
@@ -25,6 +31,11 @@ dependencies {
 
     implementation 'org.springframework.boot:spring-boot-starter-jdbc'
     implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
+
+    implementation 'org.springframework.modulith:spring-modulith-starter-jdbc'
+    //todo verder bekijken maar voegt zaken to aan actuator en ook voor observability:
+    implementation 'org.springframework.modulith:spring-modulith-starter-insight'
+
     runtimeOnly 'org.postgresql:postgresql'
 
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'

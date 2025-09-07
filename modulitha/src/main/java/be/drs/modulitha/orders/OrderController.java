@@ -1,5 +1,7 @@
 package be.drs.modulitha.orders;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
@@ -38,6 +40,8 @@ public class OrderController {
 @Service
 class OrderService {
 
+    Logger logger = LoggerFactory.getLogger(getClass());
+
     private final ApplicationEventPublisher publisher;
 
     private final OrderRepository repository;
@@ -49,11 +53,13 @@ class OrderService {
 
     void placeOrder(Order order) {
         var saved = this.repository.save(order);
-        System.out.println("saved [" + saved + "]");
+        logger.info("saved [{}]", saved);
         saved.lineItems()
                 .stream()
                 .map(li -> new OrderPlacedEvent(li.id(), li.quantity(), li.product()))
                 .forEach(this.publisher::publishEvent);
+
+        //TODO nog testen of alles werkt zoals verwacht als we een fout gooien na het publishen van de events
     }
 
 }
