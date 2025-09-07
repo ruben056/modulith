@@ -8,13 +8,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Set;
 
 @RestController
-@RequestMapping("/orders")
 public class OrderController {
 
     private final OrderService orderService;
@@ -23,14 +21,21 @@ public class OrderController {
         this.orderService = orderService;
     }
 
-    @PostMapping
+    @PostMapping("/orders")
     void placeOrder(@RequestBody Order order) {
+        this.orderService.placeOrder(order);
+    }
+
+    @Transactional
+    @PostMapping("/orderstx")
+    void placeOrdertx(@RequestBody Order order) {
         this.orderService.placeOrder(order);
     }
 }
 
+
+
 @Service
-//@Transactional // without transactional the event listener is called before the data is committed and the transactionaleventlistener is never called
 class OrderService {
 
     private final ApplicationEventPublisher publisher;

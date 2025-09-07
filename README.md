@@ -21,3 +21,21 @@ PGPASSWORD=secret psql -U myuser -h localhost mydatabase
 [README.md](modulitha/README.md)
 
 ...
+
+
+
+
+# TODO:
+- [x] 2 ordercontrollers
+  - one with @Transactional
+  - one without @Transactional
+    - verify different behaviour (@TransactionalEventListeners will not be triggered when not in @Transaction!!!!)
+- [ ] vorige wordt idealiter "gedocumenteerd" dmv  integratietesten...
+- [ ] add spring modulith event toestand -> https://docs.spring.io/spring-modulith/docs/current/reference/htmlsingle/#_domain_events
+   hier beetje mee spelen
+
+-[ ] strategy voor poison events -> https://docs.spring.io/spring-modulith/docs/current/reference/htmlsingle/#_handling_poison_events
+   (als consumer bug bevat of error heeft, kan de hele eventstream geblokkeerd geraken...)
+
+-[ ]  externalized events toevoegen via amqp (rabbitmq)  https://docs.spring.io/spring-modulith/docs/current/reference/htmlsingle/#_externalized_events
+   hier beetje mee spelen

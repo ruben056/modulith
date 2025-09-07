@@ -26,7 +26,7 @@ class Products {
     @EventListener
     void on(OrderPlacedEvent ope) throws Exception {
         Thread.sleep(5_000);
-        System.out.println("order placed event [" + ope + "]");
+        System.out.println("order placed event [" + ope + "], wordt altijd getriggered, ook zonder tx context");
         Thread.sleep(5_000);
         this.productsCollaborator.create(ope.order());
     }
@@ -34,7 +34,7 @@ class Products {
     @TransactionalEventListener
     void outboxOn(OrderPlacedEvent ope) throws Exception {
         Thread.sleep(5_000);
-        System.out.println("outbox order placed event [" + ope + "]");
+        System.out.println("outbox order placed event  [" + ope + "] , wordt normaal enkel getriggered als de event een tx context heeft");
         Thread.sleep(5_000);
         this.productsCollaborator.create(ope.order());
     }
